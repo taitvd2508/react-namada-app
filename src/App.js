@@ -1,25 +1,97 @@
-import logo from './logo.svg';
-import './App.css';
+import {ColorModeContext, useMode} from "./theme";
+import {CssBaseline, ThemeProvider} from "@mui/material";
+import Topbar from "./scenes/global/Topbar";
+import Sidebar from "./scenes/global/Sidebar";
+import Dashboard from "./scenes/dashboard";
+import Block from "./scenes/block";
+import Transaction from "./scenes/transaction";
+import {Route, Routes} from "react-router-dom";
+import Validator from "./scenes/validator";
+import PageTitle from "./components/PageTitle";
+import {BlockDetail} from "./scenes/blockDetail";
+import NotFound from "./scenes/notFound";
+import {TransactionDetail} from "./scenes/transactionDetail";
+import {ValidatorDetail} from "./scenes/validatorDetail";
+import {ToastContainer} from "react-toastify";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [theme, colorTheme] = useMode();
+    return (
+        <ColorModeContext.Provider value={colorTheme}>
+            <ThemeProvider theme={theme}>
+                <CssBaseline/>
+                <div className="app">
+                    <Sidebar/>
+                    <main className="content">
+                        <Topbar/>
+                        <Routes>
+                            <Route index
+                                   element={
+                                       <>
+                                           <PageTitle title="Dashboard"/>
+                                           <Dashboard/>
+                                       </>
+                                   }/>
+                            <Route path={"/blocks"} element={
+                                <>
+                                    <PageTitle title="Blocks"/>
+                                    <Block/>
+                                </>
+                            }/>
+                            <Route path={"/validators"} element={
+                                <>
+                                    <PageTitle title="Validators"/>
+                                    <Validator/>
+                                </>
+                            }/>
+                            <Route path={"/transactions"} element={
+                                <>
+                                    <PageTitle title="Transactions"/>
+                                    <Transaction/>
+                                </>
+                            }/>
+                            <Route path={"/blocks/:blockHeight"} element={
+                                <>
+                                    <PageTitle title="Block Detail"/>
+                                    <BlockDetail/>
+                                </>
+                            }/>
+                            <Route path={"/validators/:validatorAddress"} element={
+                                <>
+                                    <PageTitle title="Validator Detail"/>
+                                    <ValidatorDetail/>
+                                </>
+                            }/>
+                            <Route path={"/transactions/:tx"} element={
+                                <>
+                                    <PageTitle title="Transaction Detail"/>
+                                    <TransactionDetail/>
+                                </>
+                            }/>
+                            <Route
+                                path={'*'}
+                                element={
+                                    <>
+                                        <PageTitle title="NotFound"/>
+                                        <NotFound/>
+                                    </>
+                                }
+                            />
+                        </Routes>
+                        <ToastContainer
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                            theme={theme}
+                        />
+                    </main>
+                </div>
+            </ThemeProvider>
+        </ColorModeContext.Provider>
+    );
 }
 
 export default App;
