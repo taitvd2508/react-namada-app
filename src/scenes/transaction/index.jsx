@@ -3,7 +3,7 @@ import {tokens} from "../../theme";
 import Header from "../../components/Header";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {useCallback, useState} from "react";
-import {SHOW_RECORD_TABLE_OPTION, TRANSACTION_ENDPOINT, TRANSACTION_ROUTER} from "../../constant";
+import {SHOW_RECORD_TABLE_OPTION, TRANSACTION_ROUTER} from "../../constant";
 import {useQuery} from "@tanstack/react-query";
 import {fetchTransaction} from "../../services/transactions";
 import {hiddenBlockId} from "../../utils";
@@ -137,7 +137,7 @@ const Transaction = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const onPageChange = useCallback((newPage: number) => {
         setPage((prev) => {
-            navigate(`/${TRANSACTION_ENDPOINT}?page=${newPage}&size=${prev.pageSize}`, {
+            navigate(`/${TRANSACTION_ROUTER}?page=${newPage}&size=${prev.pageSize}`, {
                 replace: true,
             });
             return {...prev, index: newPage};
@@ -147,7 +147,7 @@ const Transaction = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const onPageSizeChange = useCallback((newPageSize: number) => {
         setPage((prev) => {
-            navigate(`/${TRANSACTION_ENDPOINT}?page=${prev.index}&size=${newPageSize}`, {
+            navigate(`/${TRANSACTION_ROUTER}?page=${prev.index}&size=${newPageSize}`, {
                 replace: true,
             });
             return {...prev, pageSize: newPageSize};

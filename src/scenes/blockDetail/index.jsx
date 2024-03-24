@@ -1,10 +1,9 @@
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {useCallback, useState} from "react";
 import {fetchDetailBlockByBlockHeight} from "../../services/block";
 import {useQuery} from "@tanstack/react-query";
 import Loader from "../../common/Loader";
 import {hiddenBlockId} from "../../utils";
-import {BLOCK_ENDPOINT} from "../../constant";
 import moment from "moment";
 import {Table} from "../../components/Table";
 import {Box, Typography, useTheme} from "@mui/material";
@@ -16,7 +15,6 @@ export const BlockDetail = () => {
     const colors = tokens(theme.palette.mode)
 
     const {blockHeight} = useParams();
-    const navigate = useNavigate();
 
     const queryFunctionFetchDetail = useCallback(() => {
         const numberBlockHeight = Number(blockHeight);
@@ -67,10 +65,7 @@ export const BlockDetail = () => {
                 return (
                     <div
                         className="cell-table-page cursor-pointer underline"
-                        style={{color: `${colors.blueAccent[400]}`, fontWeight: 600, textDecoration: 'underline'}}
-                        onClick={() =>
-                            navigate(`/${BLOCK_ENDPOINT}/${detailBlockData?.header?.height}`)
-                        }
+                        style={{fontWeight: 600}}
                     >
                         # {detailBlockData?.header?.height}
                     </div>
