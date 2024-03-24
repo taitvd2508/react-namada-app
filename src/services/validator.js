@@ -1,5 +1,12 @@
 import axios from 'axios';
-import {BASE_URL_QUERY, BASE_URL_QUERY_VAL, GET_COMMIT_SIGNATURE, VALIDATOR, VALIDATOR_ENDPOINT,} from '../constant';
+import {
+    BASE_URL_GET_LASTEST_SIGNATURE,
+    BASE_URL_QUERY,
+    BASE_URL_QUERY_VAL,
+    GET_COMMIT_SIGNATURE,
+    VALIDATOR,
+    VALIDATOR_ENDPOINT,
+} from '../constant';
 import {getLastCommit} from './block';
 
 const cookDataToObj = (arr: Array<any>) => {
@@ -104,7 +111,7 @@ export const fetchPartValidator = async (
 export const fetchLatestSignatureValidator = async (address: string) => {
     return axios
         .get(
-            `${BASE_URL_QUERY_VAL}/node/${VALIDATOR_ENDPOINT}/${VALIDATOR}/${address}/latestSignatures`,
+            `${BASE_URL_GET_LASTEST_SIGNATURE}/node/${VALIDATOR_ENDPOINT}/${VALIDATOR}/${address}/latestSignatures`,
         )
         .then((res) => res.data)
         .catch((err) => err);
